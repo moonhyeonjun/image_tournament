@@ -21,8 +21,8 @@ class CardSelector extends StatelessWidget {
           child: Card(
             child: Image.asset(
               card1,
-              width: 300,
-              height: 300,
+              width: 350,
+              height: 350,
               fit: BoxFit.cover,
             ),
           ),
@@ -33,8 +33,8 @@ class CardSelector extends StatelessWidget {
           child: Card(
             child: Image.asset(
               card2,
-              width: 300,
-              height: 300,
+              width: 350,
+              height: 350,
               fit: BoxFit.cover,
             ),
           ),
