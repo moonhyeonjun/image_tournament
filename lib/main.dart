@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:image_tournament/start_game_button.dart';
+import 'package:image_tournament/select_photos_button.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,7 +31,7 @@ class HomePage extends StatelessWidget {
         title: const Text('Photo Tournament'),
       ),
       body: const Center(
-        child: StartGameButton(),
+        child: SelectPhotosButton(),
       ),
     );
   }
