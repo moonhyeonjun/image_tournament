@@ -17,6 +17,7 @@ class _GamePageState extends State<GamePage> {
   late List<String> selectedCards;
   late List<String> selectedCardsThisRound;
   late Random random;
+  late int totalCardCount;
   late int round;
 
   @override
@@ -25,20 +26,24 @@ class _GamePageState extends State<GamePage> {
     selectedCards = List.from(widget.selectedPhotos);
     selectedCardsThisRound = [];
     random = Random();
+    totalCardCount = selectedCards.length;
     round = 1;
   }
 
   void nextRound(String selectedCard, String unSelectedCard) {
+    round++;
     selectedCardsThisRound.add(selectedCard);
     setState(() {
       selectedCards.remove(unSelectedCard);
+      totalCardCount = selectedCards.length + selectedCardsThisRound.length;
     });
 
     if (selectedCards.length == selectedCardsThisRound.length) {
       setState(() {
-        round++;
         selectedCards = List.from(selectedCardsThisRound);
         selectedCardsThisRound.clear();
+        totalCardCount = selectedCards.length + selectedCardsThisRound.length;
+        round = 1;
       });
     }
   }
@@ -47,12 +52,20 @@ class _GamePageState extends State<GamePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(round < 5 ? 'Round $round' : 'Congratulations!'),
-      ),
+          title: Text(
+        selectedCards.length == 1
+            ? 'Winner'
+            : selectedCards.length <= 2
+                ? 'Final'
+                : selectedCards.length <= 4
+                    ? 'Semi-Final ($round/${totalCardCount ~/ 2})'
+                    : '$totalCardCount Round ($round/${totalCardCount ~/ 2})',
+      )),
       body: Center(
         child: selectedCards.length == 1
             ? AnimatedCard(
                 imagePath: selectedCards[0],
+                description: 'Winner',
               )
             : _buildCardSelector(),
       ),
@@ -77,11 +90,6 @@ class _GamePageState extends State<GamePage> {
         card1: card1,
         card2: card2,
         onCardSelected: nextRound,
-      );
-    } else if (remainingCards.length == 1) {
-      // If only one card left, display that card
-      return AnimatedCard(
-        imagePath: remainingCards[0],
       );
     } else {
       // No cards left to display
