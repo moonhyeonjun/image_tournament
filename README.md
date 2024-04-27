@@ -1,4 +1,4 @@
-# image_tournament
+# Photo Tournament Game
 
 A new Flutter project.
 
